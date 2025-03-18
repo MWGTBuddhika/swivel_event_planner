@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "575274558438",
+    "project_id": "swivel-tech-event-planner",
+    "storage_bucket": "swivel-tech-event-planner.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:575274558438:android:d0999c06090a2dd0ad2c27",
+        "android_client_info": {
+          "package_name": "com.swivel.event_planner"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClAEtYs5V9-JwSf9irxnUqFSpxKchKzCA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
