@@ -25,3 +25,5 @@ flutter pub get
 ```bash
 flutter build apk
 ```
+- [For more Info: please visit](https://drive.google.com/file/d/1EFMOwrShm9KOBcw8NznrZ2NbTW4XC6yv/view?usp=sharing)
+
