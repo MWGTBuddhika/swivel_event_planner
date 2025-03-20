@@ -11,7 +11,7 @@ import '../../../core/route/app_router.dart';
 import '../../../core/route/app_router.gr.dart';
 import '../../../services/firebase_service.dart';
 import '../../../shared_components/util/regex.dart';
-import '../../../shared_components/util/snackbar.dart';
+import '../../../shared_components/widgets/snackbar.dart';
 part 'login_event.dart';
 part 'login_state.dart';
 

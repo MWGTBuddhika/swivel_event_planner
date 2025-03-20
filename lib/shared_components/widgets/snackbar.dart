@@ -3,8 +3,8 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
-import '../../shared_components/theme/color_pallet.dart';
-import '../../shared_components/theme/text_styles.dart';
+import '../theme/color_pallet.dart';
+import '../theme/text_styles.dart';
 class AppSnackBar{
 
   SnackBar showSnackBar({

@@ -16,7 +16,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../../core/route/app_router.dart';
 import '../../../shared_components/models/user_profile.dart';
 import '../../../shared_components/util/regex.dart';
-import '../../../shared_components/util/snackbar.dart';
+import '../../../shared_components/widgets/snackbar.dart';
 import '../../login/blocs/login_bloc.dart';
 part 'user_profile_event.dart';
 part 'user_profile_state.dart';

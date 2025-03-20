@@ -3,7 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_planner/event_planner_app.dart';
 import 'package:event_planner/shared_components/theme/color_pallet.dart';
-import 'package:event_planner/shared_components/util/snackbar.dart';
+import 'package:event_planner/shared_components/widgets/snackbar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

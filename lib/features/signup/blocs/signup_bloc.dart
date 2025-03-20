@@ -10,7 +10,7 @@ import 'package:get/get_core/src/get_main.dart';
 import '../../../core/route/app_router.dart';
 import '../../../services/firebase_service.dart';
 import '../../../shared_components/util/regex.dart';
-import '../../../shared_components/util/snackbar.dart';
+import '../../../shared_components/widgets/snackbar.dart';
 part 'signup_event.dart';
 part 'signup_state.dart';
 
