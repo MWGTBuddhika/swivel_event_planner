@@ -1,16 +1,27 @@
-# event_planner
+# Swivel tech Event Planner
 
-Swivel Event Planner
+## Steps to Upgrade, Fetch Dependencies, and Build APK
 
-## Getting Started
+### 1. Upgrade Flutter to the Latest Version
 
-This project is a starting point for a Flutter application.
+To upgrade Flutter to the latest stable version, run:
 
-A few resources to get you started if this is your first Flutter project:
+```bash
+flutter upgrade
+```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+This will ensure that you are using the latest version of Flutter.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+#### 2. Fetch Dependencies
+   Run the following command to fetch all dependencies listed in the pubspec.yaml file:
+
+```bash
+flutter pub get
+```
+
+##### 3. Build the APK
+   To build the APK for your project, run:
+
+```bash
+flutter build apk
+```
