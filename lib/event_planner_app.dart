@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
 
-import 'core/blocs/app_bloc/app_bloc.dart';
 import 'features/home/blocs/home_bloc.dart';
 import 'features/user_profile/blocs/user_profile_bloc.dart';
 
@@ -55,11 +54,6 @@ class _EventPlannerAppState extends State<EventPlannerApp> with WidgetsBindingOb
         Provider(
             lazy: false,
             create: (context) => ApiService(baseUrl: Constants.baseUrl)),
-
-        BlocProvider<AppBloc>(
-          lazy: false,
-          create: (context) => AppBloc(),
-        ),
 
         BlocProvider<LoginBloc>(
           lazy: false,
