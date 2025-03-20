@@ -26,3 +26,16 @@ class ValidateMailingAddress extends UserProfileEvent {
 class PickAndUploadUserImage extends UserProfileEvent {
   PickAndUploadUserImage();
 }
+class SaveUserProfile extends UserProfileEvent {
+  SaveUserProfile();
+}
+class GetUserProfile extends UserProfileEvent {
+  GetUserProfile();
+}
+class EditFieldsClickedToggle extends UserProfileEvent {
+  EditFieldsClickedToggle();
+}
+class SaveFCMToken extends UserProfileEvent {
+  final String fcmToken;
+  SaveFCMToken({required this.fcmToken});
+}

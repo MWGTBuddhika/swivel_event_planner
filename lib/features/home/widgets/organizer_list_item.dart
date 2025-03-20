@@ -1,11 +1,14 @@
+import 'package:event_planner/shared_components/models/organizer.dart';
 import 'package:event_planner/shared_components/theme/text_styles.dart';
+import 'package:event_planner/shared_components/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import '../../../shared_components/theme/color_pallet.dart';
 
 class OrganizerListItem extends StatelessWidget {
-  const OrganizerListItem({super.key});
+  const OrganizerListItem({super.key,required this.organizer});
+  final Organizer organizer;
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +31,8 @@ class OrganizerListItem extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(50)),
               child: Image.network(
-                "https://images.unsplash.com/photo-1579353977828-2a4eab540b9a?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                fit: BoxFit.fill,
+                Constants().getRandomImageUrl(),
+                fit: BoxFit.cover,
                 loadingBuilder:
                     (context, child, loadingProgress) {
                   if (loadingProgress == null) return child;
@@ -56,8 +59,8 @@ class OrganizerListItem extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Name",style: ThemeTextStyles.subtitlesS2,),
-              Text("Email",style: ThemeTextStyles.subTextStyle,),
+              Text(organizer.name??"",style: ThemeTextStyles.subtitlesS2,),
+              Text(organizer.email??"",style: ThemeTextStyles.subTextStyle,),
             ],
           ),
           Spacer(),

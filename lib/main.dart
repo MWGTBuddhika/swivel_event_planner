@@ -3,10 +3,13 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_planner/event_planner_app.dart';
 import 'package:event_planner/shared_components/theme/color_pallet.dart';
+import 'package:event_planner/shared_components/util/snackbar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'dart:developer' as developer;
 
 import 'core/blocs/bloc_observer.dart';
@@ -41,4 +44,9 @@ Future<void> runApplication() async {
 void onError(dynamic error, StackTrace stack) {
   developer.log("error caught from zone: " + error.toString());
   developer.log("error caught from zone StackTrace: " + stack.toString());
+  if(Get.context!=null){
+    ScaffoldMessenger.of(Get.context!).showSnackBar(
+        AppSnackBar().showSnackBar(title: "Error caught from zone", subTitle: error.toString())
+    );
+  }
 }

@@ -7,14 +7,14 @@ import '../theme/text_styles.dart';
 
 
 class PasswordInput extends StatefulWidget {
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String hintText;
   final Icon? prefixIcon;
   final String? errorText;
   final Function(String)? onChanged;
 
   PasswordInput({
-    required this.controller,
+    this.controller,
     required this.hintText,
     this.prefixIcon,
     this.errorText,

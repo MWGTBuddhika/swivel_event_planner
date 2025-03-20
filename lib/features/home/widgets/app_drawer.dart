@@ -1,3 +1,4 @@
+import 'package:event_planner/features/login/blocs/login_bloc.dart';
 import 'package:event_planner/features/user_profile/blocs/user_profile_bloc.dart';
 import 'package:event_planner/shared_components/util/constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,7 +21,7 @@ class AppDrawer extends StatelessWidget {
         backgroundColor: ColorPallet.white,
         shape: const RoundedRectangleBorder(),
         child: BlocBuilder<UserProfileBloc,UserProfileState>(
-            builder: (context,UserProfileState) {
+            builder: (context,userProfileState) {
               return Padding(
                 padding: EdgeInsets.only(top: 60,left: 15,right: 15),
                 child: Column(
@@ -34,8 +35,8 @@ class AppDrawer extends StatelessWidget {
                           child: ClipRRect(
                             borderRadius: BorderRadius.all(Radius.circular(50)),
                             child: Image.network(
-                              "https://images.unsplash.com/photo-1579353977828-2a4eab540b9a?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                              fit: BoxFit.fill,
+                              userProfileState.userProfile.imageUrl,
+                              fit: BoxFit.cover,
                               loadingBuilder:
                                   (context, child, loadingProgress) {
                                 if (loadingProgress == null) return child;
@@ -62,21 +63,27 @@ class AppDrawer extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Jane Cooper", style: ThemeTextStyles.subtitlesS2),
-                            Text("jane.c@gmail.com", style: ThemeTextStyles.subTextStyle)
+                            Text("${userProfileState.userProfile.firstName} ${userProfileState.userProfile.lastName}", style: ThemeTextStyles.subtitlesS2),
+                            Text("${userProfileState.userProfile.email}", style: ThemeTextStyles.subTextStyle)
                           ],
                         ),
                       ],
                     ),
                     Gap(20),
-                    Row(
-                      children: [
-                        Icon(CupertinoIcons.square_arrow_left,size: 20,color: ColorPallet.primaryColor),
-                        Gap(10),
-                        Text(Constants.logout, style: ThemeTextStyles.subtitlesS2.copyWith(
-                          color: ColorPallet.primaryColor,fontWeight: FontWeight.bold
-                        )),
-                      ],
+                    InkWell(
+                      onTap: (){
+                        context.read<LoginBloc>().add(UserLogout());
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(CupertinoIcons.square_arrow_left,size: 20,color: ColorPallet.primaryColor),
+                          Gap(10),
+                          Text(Constants.logout, style: ThemeTextStyles.subtitlesS2.copyWith(
+                            color: ColorPallet.primaryColor,fontWeight: FontWeight.bold
+                          )),
+                        ],
+                      ),
                     ),
                   ],
                 ),

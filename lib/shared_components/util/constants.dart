@@ -1,3 +1,5 @@
+import 'dart:math';
+
 class Constants {
   static const String welcome = 'Welcome';
   static const String welcomeToYourPortal = 'Welcome to your Portal';
@@ -30,4 +32,8 @@ class Constants {
   static const String profile = 'Profile';
   static const String edit = 'Edit';
   static const String save = 'Save';
+  static const String comments = 'Comments';
+
+  static const String baseUrl = 'https://jsonplaceholder.typicode.com/';
+  String getRandomImageUrl() =>'https://picsum.photos/id/${Random().nextInt(50)}/300/200';
 }

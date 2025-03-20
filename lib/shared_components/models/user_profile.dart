@@ -2,7 +2,6 @@
 import 'package:equatable/equatable.dart';
 
 class UserProfile extends Equatable {
-  final String userId;
   final String firstName;
   final String lastName;
   final String email;
@@ -11,7 +10,6 @@ class UserProfile extends Equatable {
   final String imageUrl;
 
   UserProfile({
-    required this.userId,
     required this.firstName,
     required this.lastName,
     required this.email,
@@ -21,7 +19,6 @@ class UserProfile extends Equatable {
   });
 
   UserProfile copyWith({
-    String? userId,
     String? firstName,
     String? lastName,
     String? email,
@@ -30,7 +27,6 @@ class UserProfile extends Equatable {
     String? imageUrl,
   }) {
     return UserProfile(
-      userId: userId ?? this.userId,
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
       email: email ?? this.email,
@@ -42,7 +38,6 @@ class UserProfile extends Equatable {
 
   factory UserProfile.initial() {
     return UserProfile(
-      userId: '',
       firstName: '',
       lastName: '',
       email: '',
@@ -53,9 +48,8 @@ class UserProfile extends Equatable {
   }
 
   /// Factory method to create an `UserProfile` from a Firebase document snapshot.
-  factory UserProfile.fromJson(Map<String, dynamic> json,String id) {
+  factory UserProfile.fromJson(Map<String, dynamic> json) {
     return UserProfile(
-      userId: id,
       firstName: json['firstName'] ?? '',
       lastName: json['lastName'] ?? '',
       email: json['email'] ?? '',
@@ -65,10 +59,20 @@ class UserProfile extends Equatable {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'firstName': firstName,
+      'lastName': lastName,
+      'email': email,
+      'phoneNumber': phoneNumber,
+      'mailingAddress': mailingAddress,
+      'imageUrl': imageUrl,
+    };
+  }
+
 
   @override
   List<Object?> get props => [
-    userId,
     firstName,
     lastName,
     email,

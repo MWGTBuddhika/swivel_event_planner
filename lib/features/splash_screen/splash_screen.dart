@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:event_planner/features/user_profile/blocs/user_profile_bloc.dart';
 import 'package:event_planner/services/firebase_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/route/app_router.dart';
 import '../../core/route/app_router.gr.dart';
@@ -25,23 +27,30 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 3), () async {
-      _fbUser =FirebaseService.instance.currentUser;
-      if(_fbUser!=null){
-        final fcmService = FCMService.instance;
-        bool notificationPermissions = await fcmService.requestPermission();
-        final fcmToken = await fcmService.getDeviceToken();
-        debugPrint("FCM Token: ${fcmToken}");
-        if(fcmToken.isEmpty){
-          print("FCM Token not fetched notifications will not be received");
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Timer(Duration(seconds: 3), () async {
+        _fbUser =FirebaseService.instance.currentUser;
+        if(_fbUser!=null){
+          final fcmService = FCMService.instance;
+          bool notificationPermissions = await fcmService.requestPermission();
+          final fcmToken = await fcmService.getDeviceToken();
+          debugPrint("FCM Token: ${fcmToken}");
+          if(fcmToken.isNotEmpty){
+            context.read<UserProfileBloc>().add(SaveFCMToken(fcmToken: fcmToken));
+            print("FCM Token not fetched notifications will not be received");
+          }
+          else{
+            print("FCM Token not fetched notifications will not be received");
+          }
+          //get user profile from fire store
+          context.read<UserProfileBloc>().add(GetUserProfile());
+          appRouter.replaceAll([DashboardRoute()]);
+          //Get.context?.read<EmployeeProfileBloc>().add(GetEmployeeProfile(_fbUser!.uid));
+        }else{
+          debugPrint('User Not found');
+          appRouter.replaceAll([LoginRoute()]);
         }
-        appRouter.replaceAll([ProfilePictureUploadRoute()]);
-        //get user profile from fire store
-        //Get.context?.read<EmployeeProfileBloc>().add(GetEmployeeProfile(_fbUser!.uid));
-      }else{
-        debugPrint('User Not found');
-        appRouter.replaceAll([LoginRoute()]);
-      }
+      });
     });
   }
 

@@ -16,6 +16,7 @@ class ThemeTextStyles {
   static TextStyle loginRestorePasswordTextStyle = TextStyle(color: ColorPallet.primaryColor,fontSize: 14);
   static TextStyle hintTextStyle = TextStyle(color: ColorPallet.lightGrey,fontSize: 14);
   static TextStyle personalInfoTextStyle = TextStyle(color: ColorPallet.grey,fontSize: 19,fontWeight: FontWeight.w700);
+  static TextStyle grey19 = TextStyle(color: ColorPallet.grey,fontSize: 19,fontWeight: FontWeight.w700);
 
   //headings
   static TextStyle headingH1 = TextStyle(fontSize: 96);

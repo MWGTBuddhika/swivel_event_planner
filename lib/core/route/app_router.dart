@@ -14,9 +14,10 @@ class AppRouter extends $AppRouter {
     CustomRoute(page: PersonalInformationRoute.page,transitionsBuilder: TransitionsBuilders.slideLeft),
     AutoRoute(page: DashboardRoute.page,
         children: [
-          AutoRoute(page: HomeRoute.page),
-          AutoRoute(page: UserProfileRoute.page),
+          AutoRoute(page: HomeRoute.page,maintainState: false),
+          AutoRoute(page: UserProfileRoute.page,maintainState: false),
         ]),
+    CustomRoute(page: PostsRoute.page,transitionsBuilder: TransitionsBuilders.slideLeft),
   ];
 
 }

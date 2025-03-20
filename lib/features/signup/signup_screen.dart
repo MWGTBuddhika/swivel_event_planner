@@ -94,16 +94,12 @@ class SignupScreen extends StatelessWidget {
                             },
                           ),
                           Gap(140),
-                          IgnorePointer(
-                            ignoring: !signupState.isSignupButtonShouldEnable,
-                            child: Button(
-                                color: !signupState.isSignupButtonShouldEnable? ColorPallet.primaryDisabledColor:
-                                ColorPallet.primaryColor,
-                                text: Constants.signup,
-                                onPressed:(){
-                                  context.read<SignupBloc>().add(UserSignup());
-                                }),
-                          ),
+                          Button(
+                              isDisabled: signupState.isSignupFormFieldsValidated,
+                              text: Constants.signup,
+                              onPressed:(){
+                                context.read<SignupBloc>().add(UserSignup());
+                              }),
                           Gap(15),
                           Button(
                               text: Constants.login,

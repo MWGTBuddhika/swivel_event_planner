@@ -41,6 +41,9 @@ class LoginState extends Equatable {
     );
   }
 
+  bool get isLoginFieldsValidated=> emailErrorText.isEmpty && passwordErrorText.isEmpty &&
+      email.isNotEmpty && password.isNotEmpty;
+
   @override
   List<Object?> get props => [
     isLoading,

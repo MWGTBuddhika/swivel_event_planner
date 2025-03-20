@@ -21,6 +21,8 @@ class TextInput extends StatelessWidget {
   final Function(String)? onChanged;
   final String? errorText;
   final String labelText;
+  final bool disabled;
+  final String? initialText;
 
   const TextInput(
       {Key? key,
@@ -37,52 +39,58 @@ class TextInput extends StatelessWidget {
       this.inputType,
         this.errorText,
         this.onChanged,
-      required this.labelText})
+      required this.labelText,
+        this.disabled=false,
+        this.initialText
+      })
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 10),
-          child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(labelText, style: ThemeTextStyles.loginEmailTextStyle)),
-        ),
-        Gap(5),
-        TextField(
-          controller: controller,
-          textAlign: textAlign ?? TextAlign.left,
-          keyboardType: inputType?? TextInputType.emailAddress,
-          onChanged: onChanged,
-          decoration: InputDecoration(
-            hintText: hintText,
-            errorMaxLines: 3,
-            errorText: errorText,
-            errorBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: ColorPallet.primaryColor),
-            ),
-            focusedErrorBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: ColorPallet.primaryColor),
-            ),
-            filled: true,
-            fillColor: fillColor ?? ColorPallet.textInputBackground,
-            prefixIcon: prefixIcon,
-            hintStyle: hintStyle?? ThemeTextStyles.hintTextStyle,
-            enabledBorder: enabledBorder ??
-                OutlineInputBorder(
-                  borderSide: BorderSide(color: ColorPallet.textInputBackground),
-                ),
-            focusedBorder: focusedBorder ??
-                OutlineInputBorder(
-                  borderSide: BorderSide(color: ColorPallet.textInputBackground, width: 2),
-                ),
-              contentPadding: EdgeInsets.only(
-                  bottom: 0, top: 0, left: 10, right: 10),
+    return IgnorePointer(
+      ignoring: disabled,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(labelText, style: ThemeTextStyles.loginEmailTextStyle)),
           ),
-        ),
-      ],
+          Gap(5),
+          TextField(
+            controller: controller,
+            textAlign: textAlign ?? TextAlign.left,
+            keyboardType: inputType?? TextInputType.emailAddress,
+            onChanged: onChanged,
+            decoration: InputDecoration(
+              hintText: hintText,
+              errorMaxLines: 3,
+              errorText: errorText,
+              errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: ColorPallet.primaryColor),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: ColorPallet.primaryColor),
+              ),
+              filled: true,
+              fillColor: fillColor ?? ColorPallet.textInputBackground,
+              prefixIcon: prefixIcon,
+              hintStyle: hintStyle?? ThemeTextStyles.hintTextStyle,
+              enabledBorder: enabledBorder ??
+                  OutlineInputBorder(
+                    borderSide: BorderSide(color: ColorPallet.textInputBackground),
+                  ),
+              focusedBorder: focusedBorder ??
+                  OutlineInputBorder(
+                    borderSide: BorderSide(color: ColorPallet.textInputBackground, width: 2),
+                  ),
+                contentPadding: EdgeInsets.only(
+                    bottom: 0, top: 0, left: 10, right: 10),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

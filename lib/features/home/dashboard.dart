@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:event_planner/core/route/app_router.gr.dart';
 import 'package:event_planner/features/home/blocs/home_bloc.dart';
 import 'package:event_planner/features/home/widgets/bottom_nav_bar.dart';
+import 'package:event_planner/features/home/widgets/app_drawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,6 +22,17 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<HomeBloc>().add(GetSliderImages());
+      context.read<HomeBloc>().add(GetOrganizers());
+      context.read<HomeBloc>().add(GetPosts());
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc,HomeState>(
@@ -54,6 +66,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     showAppBar: false,
                     bodyObservesSafeArea: false,
                     resizeToAvoidBottomInset: false,
+                    drawer: AppDrawer(),
                     body: child
                 );
               }

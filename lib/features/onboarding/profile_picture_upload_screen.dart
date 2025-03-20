@@ -20,80 +20,82 @@ class ProfilePictureUploadScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PageBase(
-      showAppBar: false,
-      bodyObservesSafeArea: false,
-      resizeToAvoidBottomInset: false,
-      body: BlocBuilder<UserProfileBloc,UserProfileState>(
-          builder: (context,userprofileState) {
-            return Container(
-              height: MediaQuery.of(context).size.height,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    Gap(MediaQuery.of(context).size.height*0.3),
-                    Text(Constants.welcome, style: ThemeTextStyles.loginWelcomeTextStyle),
-                    Gap(12),
-                    Text(Constants.uploadPictureDesc,
-                        style: ThemeTextStyles.subTextStyle,
-                    textAlign: TextAlign.center,),
-                    Gap(50),
-                    GestureDetector(
-                      onTap: (){
-                        context.read<UserProfileBloc>().add(PickAndUploadUserImage());
-                      },
-                      child: Container(
-                        width: 116,
-                        height: 116,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: ColorPallet.fadedOrange
+    return BlocBuilder<UserProfileBloc,UserProfileState>(
+        builder: (context,userprofileState) {
+        return PageBase(
+          showAppBar: false,
+          bodyObservesSafeArea: false,
+          resizeToAvoidBottomInset: false,
+          showProgress: userprofileState.isLoading,
+          body: Container(
+                  height: MediaQuery.of(context).size.height,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: [
+                        Gap(MediaQuery.of(context).size.height*0.3),
+                        Text(Constants.welcome, style: ThemeTextStyles.loginWelcomeTextStyle),
+                        Gap(12),
+                        Text(Constants.uploadPictureDesc,
+                            style: ThemeTextStyles.subTextStyle,
+                        textAlign: TextAlign.center,),
+                        Gap(50),
+                        GestureDetector(
+                          onTap: (){
+                            context.read<UserProfileBloc>().add(PickAndUploadUserImage());
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: Container(
+                              width: 116,
+                              height: 116,
+                              color: ColorPallet.fadedOrange,
+                              child:
+                               userprofileState.userProfile.imageUrl.isNotEmpty?
+                               Image.network(
+                                 userprofileState.userProfile.imageUrl,
+                                 fit: BoxFit.cover,
+                                 loadingBuilder:
+                                     (context, child, loadingProgress) {
+                                   if (loadingProgress == null) return child;
+                                   return Center(
+                                     child: CircularProgressIndicator(
+                                       value: loadingProgress.expectedTotalBytes !=
+                                           null
+                                           ? loadingProgress
+                                           .cumulativeBytesLoaded /
+                                           (loadingProgress
+                                               .expectedTotalBytes ??
+                                               1)
+                                           : null,
+                                       color: ColorPallet.primaryColor,
+                                     ),
+                                   );
+                                 },
+                                 errorBuilder: (context, error, stackTrace) =>
+                                     Icon(Icons.error),
+                               ):
+                               Icon(Icons.camera_alt_outlined,color: ColorPallet.primaryColor),
+                            ),
+                          ),
                         ),
-                        child:
-                         userprofileState.userProfile.imageUrl.isNotEmpty?
-                         Image.network(
-                           userprofileState.userProfile.imageUrl,
-                           fit: BoxFit.fill,
-                           loadingBuilder:
-                               (context, child, loadingProgress) {
-                             if (loadingProgress == null) return child;
-                             return Center(
-                               child: CircularProgressIndicator(
-                                 value: loadingProgress.expectedTotalBytes !=
-                                     null
-                                     ? loadingProgress
-                                     .cumulativeBytesLoaded /
-                                     (loadingProgress
-                                         .expectedTotalBytes ??
-                                         1)
-                                     : null,
-                                 color: ColorPallet.primaryColor,
-                               ),
-                             );
-                           },
-                           errorBuilder: (context, error, stackTrace) =>
-                               Icon(Icons.error),
-                         ):
-                         Icon(Icons.camera_alt_outlined,color: ColorPallet.primaryColor),
-                      ),
+                        Spacer(),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Button(
+                              text: Constants.next,
+                              isDisabled: userprofileState.userProfile.imageUrl.isEmpty,
+                              onPressed: () {
+                                appRouter.navigate(PersonalInformationRoute());
+                              }),
+                        ),
+                        Gap(50),
+                      ],
                     ),
-                    Spacer(),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Button(
-                          text: Constants.next,
-                          onPressed: () {
-                            appRouter.navigate(PersonalInformationRoute());
-                          }),
-                    ),
-                    Gap(50),
-                  ],
-                ),
-              ),
-            );
-          }
-      ),
+                  ),
+                )
+        );
+      }
     );
   }
 }

@@ -21,93 +21,87 @@ import 'blocs/login_bloc.dart';
 class LoginScreen extends StatelessWidget {
    LoginScreen({super.key});
 
-  final TextEditingController _emailController = TextEditingController();
-
-  final TextEditingController _passwordController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
-    return PageBase(
-      showAppBar: false,
-      bodyObservesSafeArea: false,
-      resizeToAvoidBottomInset: false,
-      body: BlocBuilder<LoginBloc,LoginState>(
-          builder: (context,loginState) {
-            return SingleChildScrollView(
-              child: IntrinsicHeight(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    children: [
-                      Gap(180),
-                      Text(Constants.welcome, style: ThemeTextStyles.loginWelcomeTextStyle),
-                      Gap(12),
-                      Text(Constants.welcomeToYourPortal, style: ThemeTextStyles.subTextStyle),
-                      Gap(60),
-                      TextInput(
-                        controller: _emailController,
-                        labelText: Constants.email,
-                        hintText: Constants.email,
-                        prefixIcon: const Icon(
-                          Icons.email_outlined,
-                          color: ColorPallet.darkGrey,
-                        ),
-                        errorText: loginState.emailErrorText.isNotEmpty?loginState.emailErrorText:null,
-                        onChanged: (text){
-                          context.read<LoginBloc>().add(CheckUserEmailInputs(text: text));
-                        },
-                      ),
-                      Gap(20),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(Constants.password, style: ThemeTextStyles.loginPasswordTextStyle)),
-                      ),
-                      Gap(5),
-                      PasswordInput(
-                        controller: _passwordController,
-                        hintText: Constants.password,
-                        errorText:  loginState.passwordErrorText.isNotEmpty?loginState.passwordErrorText:null,
-                        onChanged: (text){
-                          context.read<LoginBloc>().add(CheckUserPasswordInputs(text: text));
-                        },
-                      ),
-                      Gap(10),
-                      Align(
-                          alignment: Alignment.centerRight,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(Constants.restorePassword, style: ThemeTextStyles.loginRestorePasswordTextStyle),
-                              Gap(5),
-                              Icon(CupertinoIcons.arrow_up_right,color: ColorPallet.primaryColor,size: 20,)
-                            ],
-                          )),
-                      Gap(160),
-                      Button(
-                          text: Constants.login,
-                          onPressed:(){
-                            // context.read<LoginBloc>().add(UserLogin(
-                            //     password: _passwordController.text,
-                            //     email: _emailController.text
-                            // ));
+    return BlocBuilder<LoginBloc,LoginState>(
+        builder: (context,loginState) {
+        return PageBase(
+          showAppBar: false,
+          bodyObservesSafeArea: false,
+          resizeToAvoidBottomInset: false,
+          showProgress: loginState.isLoading,
+          body: SingleChildScrollView(
+                  child: IntrinsicHeight(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        children: [
+                          Gap(180),
+                          Text(Constants.welcome, style: ThemeTextStyles.loginWelcomeTextStyle),
+                          Gap(12),
+                          Text(Constants.welcomeToYourPortal, style: ThemeTextStyles.subTextStyle),
+                          Gap(60),
+                          TextInput(
+                            labelText: Constants.email,
+                            hintText: Constants.email,
+                            prefixIcon: const Icon(
+                              Icons.email_outlined,
+                              color: ColorPallet.darkGrey,
+                            ),
+                            errorText: loginState.emailErrorText.isNotEmpty?loginState.emailErrorText:null,
+                            onChanged: (text){
+                              context.read<LoginBloc>().add(CheckUserEmailInputs(text: text));
+                            },
+                          ),
+                          Gap(20),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(Constants.password, style: ThemeTextStyles.loginPasswordTextStyle)),
+                          ),
+                          Gap(5),
+                          PasswordInput(
+                            hintText: Constants.password,
+                            errorText:  loginState.passwordErrorText.isNotEmpty?loginState.passwordErrorText:null,
+                            onChanged: (text){
+                              context.read<LoginBloc>().add(CheckUserPasswordInputs(text: text));
+                            },
+                          ),
+                          Gap(10),
+                          Align(
+                              alignment: Alignment.centerRight,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(Constants.restorePassword, style: ThemeTextStyles.loginRestorePasswordTextStyle),
+                                  Gap(5),
+                                  Icon(CupertinoIcons.arrow_up_right,color: ColorPallet.primaryColor,size: 20,)
+                                ],
+                              )),
+                          Gap(160),
+                          Button(
+                              text: Constants.login,
+                              isDisabled: !loginState.isLoginFieldsValidated,
+                              onPressed:(){
+                                context.read<LoginBloc>().add(UserLogin());
+                              }),
+                          Gap(15),
+                          Button(
+                              text: Constants.signup,
+                              onPressed: () {
+                            appRouter.replaceAll([SignupRoute()]);
                           }),
-                      Gap(15),
-                      Button(
-                          text: Constants.signup,
-                          onPressed: () {
-                        appRouter.replaceAll([SignupRoute()]);
-                      }),
-                      Spacer(),
-                      MediaQuery.of(context).viewInsets.bottom <= 50? SizedBox.shrink():Gap(300),
-                    ],
+                          Spacer(),
+                          MediaQuery.of(context).viewInsets.bottom <= 50? SizedBox.shrink():Gap(300),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            );
-          }
-      ),
+                )
+
+        );
+      }
     );
   }
 }

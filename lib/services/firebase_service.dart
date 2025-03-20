@@ -1,5 +1,8 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:event_planner/shared_components/models/user_profile.dart';
+import 'package:event_planner/shared_components/util/keywords.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -92,30 +95,43 @@ class FirebaseService {
     }
   }
 
-  // Future<void> saveUserDetails(String uid, EmployeeSignupDetails employeeSignupDetails) async {
-  //   CollectionReference employees = FirebaseFirestore.instance.collection('employees');
-  //   CollectionReference users = FirebaseFirestore.instance.collection('users');
-  //   try {
-  //     List<String> jobRoles = employeeSignupDetails.jobRoles.map((jobRole) => jobRole.name).toList();
-  //     users.doc(uid).set({
-  //       'id': uid,
-  //       'userType': 'employee',
-  //       'name': employeeSignupDetails.name,
-  //     });
-  //     employees.doc(uid).set({
-  //       'id': uid,
-  //       'name': employeeSignupDetails.name,
-  //       'email': employeeSignupDetails.email,
-  //       'jobRoles': jobRoles,
-  //       'availableDays': employeeSignupDetails.availableDays.toMap(),
-  //       'contactNumber': employeeSignupDetails.contactNumber,
-  //       'dob': employeeSignupDetails.dob,
-  //       'nic': employeeSignupDetails.nic,
-  //       'createdAt': FieldValue.serverTimestamp(),
-  //     });
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
+  Future<void> saveUserDetails(UserProfile userProfile) async {
+    CollectionReference users = FirebaseFirestore.instance.collection(Keywords.users);
+    try {
+      users.doc(currentUser?.uid).set(userProfile.toJson());
+    } catch (e) {
+      throw 'Save user profile failed: $e';
+    }
+  }
 
+  Future<UserProfile?> getUserProfile() async {
+    try {
+      print('fetching user profile from /Users/${currentUser?.uid}');
+      DocumentSnapshot doc =
+      await FirebaseFirestore.instance.collection(Keywords.users).doc(currentUser?.uid).get();
+      if (doc.exists) {
+        return UserProfile.fromJson(doc.data() as Map<String, dynamic>);
+      } else {
+        print('User profile not found');
+        return null;
+      }
+    } catch (e) {
+      print('Error getting employee profile: $e');
+      throw Exception('Error getting employee profile: $e');
+    }
+  }
+
+
+  Future<bool> saveUserFCMToken(String fcmToken) async {
+    try {
+      DocumentReference docRef =
+      FirebaseFirestore.instance.collection(Keywords.users).doc(currentUser?.uid);
+      await docRef.update({
+        'fcmToken': fcmToken,
+      });
+      return true;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }

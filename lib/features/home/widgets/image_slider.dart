@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:event_planner/features/home/blocs/home_bloc.dart';
 import 'package:event_planner/shared_components/theme/color_pallet.dart';
 import 'package:event_planner/shared_components/theme/text_styles.dart';
+import 'package:event_planner/shared_components/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,7 +19,8 @@ class _ImageSliderState extends State<ImageSlider> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(builder: (context, homeState) {
+    return BlocBuilder<HomeBloc, HomeState>
+      (builder: (context, homeState) {
       final double height = MediaQuery.of(context).size.height*0.3;
       return Container(
         height: height,
@@ -38,17 +40,12 @@ class _ImageSliderState extends State<ImageSlider> {
                     });
                   }),
               carouselController: _controller,
-              items: [
-                "https://via.placeholder.com/600/92c952",
-                "https://images.unsplash.com/photo-1579353977828-2a4eab540b9a?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                "https://images.unsplash.com/photo-1579353977828-2a4eab540b9a?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                "https://images.unsplash.com/photo-1579353977828-2a4eab540b9a?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              ]
+              items: homeState.sliderImages
                   .map((item) => ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(5.0)),
                     child: Image.network(
-                      item,
-                                    fit: BoxFit.fill,
+                      item.url??Constants().getRandomImageUrl(),
+                                    fit: BoxFit.cover,
                       loadingBuilder:
                           (context, child, loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -86,7 +83,7 @@ class _ImageSliderState extends State<ImageSlider> {
                   children: [
                     Text(_current.toString(),style: ThemeTextStyles.subTextStyle),
                     Text("/",style: ThemeTextStyles.subTextStyle),
-                    Text("15",style: ThemeTextStyles.subTextStyle),
+                    Text("${homeState.sliderImages.length}",style: ThemeTextStyles.subTextStyle),
                   ],
                 ),
               ),

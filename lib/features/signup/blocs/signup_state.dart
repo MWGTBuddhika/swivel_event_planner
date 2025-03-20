@@ -51,7 +51,7 @@ class SignUpState extends Equatable {
     );
   }
 
-  bool get isSignupButtonShouldEnable=> emailErrorText.isEmpty && passwordErrorText.isEmpty && confirmPasswordErrorText.isEmpty &&
+  bool get isSignupFormFieldsValidated=> emailErrorText.isEmpty && passwordErrorText.isEmpty && confirmPasswordErrorText.isEmpty &&
       email.isNotEmpty && password.isNotEmpty && confirmPassword.isNotEmpty && password==confirmPassword;
 
   @override
