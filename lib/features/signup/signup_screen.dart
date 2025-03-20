@@ -95,7 +95,7 @@ class SignupScreen extends StatelessWidget {
                           ),
                           Gap(140),
                           Button(
-                              isDisabled: signupState.isSignupFormFieldsValidated,
+                              isDisabled: !signupState.isSignupFormFieldsValidated,
                               text: Constants.signup,
                               onPressed:(){
                                 context.read<SignupBloc>().add(UserSignup());
